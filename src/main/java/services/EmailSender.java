@@ -13,7 +13,6 @@ import java.util.Properties;
  */
 public class EmailSender {
 
-
     public static void main(String[] args) throws UnsupportedEncodingException, MessagingException {
         String login = args[0];
         String password = args[1];

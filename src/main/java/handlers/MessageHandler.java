@@ -9,7 +9,7 @@ import javax.mail.internet.*;
 
 import java.io.UnsupportedEncodingException;
 
-import static constants.ConstantsHolder.*;
+import static handlers.ConstantsHandler.*;
 
 /**
  * @author Andrey_Chadov on 2/1/2017.
