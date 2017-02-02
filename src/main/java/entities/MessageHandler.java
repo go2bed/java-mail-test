@@ -1,11 +1,13 @@
 package entities;
 
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.*;
+import javax.mail.internet.*;
+
+import java.io.UnsupportedEncodingException;
 
 import static constants.ConstantsHolder.*;
 
@@ -27,9 +29,24 @@ public class MessageHandler {
         return msg;
     }
 
-    public Message getMessageWithAttachment() {
+    public Message getMessageWithAttachment() throws MessagingException, UnsupportedEncodingException {
+        //First off all creating simple message
+        msg = getSimpleMessage();
 
+        //Then add multipart content
+        BodyPart messageBodyPart = new MimeBodyPart();
+        messageBodyPart.setContent(CONTENT, "text/html; charset=" + CHARSET + "");
+        Multipart multipart = new MimeMultipart();
+        multipart.addBodyPart(messageBodyPart);
 
-      return msg;
+        MimeBodyPart attachmentBodyPart = new MimeBodyPart();
+        //Add attachment file
+        DataSource dataSource = new FileDataSource(ATTACHMENT);
+        attachmentBodyPart.setDataHandler(new DataHandler(dataSource));
+        attachmentBodyPart.setFileName(MimeUtility.encodeText(dataSource.getName()));
+        multipart.addBodyPart(attachmentBodyPart);
+        //Set multipart with file in email body
+        msg.setContent(multipart);
+        return msg;
     }
 }
