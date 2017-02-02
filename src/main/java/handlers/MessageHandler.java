@@ -1,4 +1,4 @@
-package entities;
+package handlers;
 
 
 import javax.activation.DataHandler;
